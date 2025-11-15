@@ -2,6 +2,12 @@ name: Test Manual Approval
 
 on:
   workflow_dispatch:
+    inputs:
+      polling-interval-seconds:
+        description: 'Polling interval in seconds (default: 30)'
+        required: false
+        type: number
+        default: 30
 
 jobs:
   approval:
@@ -17,6 +23,7 @@ jobs:
           minimum-approvals: 1
           issue-title: "Test Approval Request"
           issue-body: "This is a test approval request. Please approve or deny."
+          polling-interval-seconds: ${{ inputs.polling-interval-seconds }}
 
       - name: Approved
         run: echo "Approval received, continuing workflow..."
