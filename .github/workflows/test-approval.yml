@@ -1,0 +1,23 @@
+name: Test Manual Approval
+
+on:
+  workflow_dispatch:
+
+jobs:
+  approval:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Wait for approval
+        uses: briansneddon/manual-approval@feature/configurable-polling-interval-test
+        with:
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          approvers: ${{ github.actor }}
+          minimum-approvals: 1
+          issue-title: "Test Approval Request"
+          issue-body: "This is a test approval request. Please approve or deny."
+
+      - name: Approved
+        run: echo "Approval received, continuing workflow..."
+
